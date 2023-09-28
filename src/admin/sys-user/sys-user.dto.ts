@@ -1,7 +1,9 @@
 import { PickType } from '@nestjs/mapped-types'
-import { IsNumber } from 'class-validator'
-import { ValidatorClassBuilder } from 'src/common/dto/util'
-import { SysUser } from 'src/entity/sys-user.entity'
+import { IsNumber, IsOptional, IsString } from 'class-validator'
+import { Type } from 'class-transformer'
+import { ValidatorClassBuilder } from '@common/dto'
+import { SysUser } from '@entity'
+import { PageOptionsDto } from '@/common/dto'
 
 export class CreateSysUserDto extends ValidatorClassBuilder(
   SysUser,
@@ -18,4 +20,19 @@ export class UpdateSysUserDto extends ValidatorClassBuilder(
 export class AssignRolesDto extends PickType(SysUser, ['id']) {
   @IsNumber({}, { each: true })
   roleIds: number[]
+}
+
+export class SysUserPageDto extends PageOptionsDto {
+  @IsString({ message: '用户名必须是字符串' })
+  @IsOptional()
+  username?: string
+
+  @IsString({ message: '昵称必须是字符串' })
+  @IsOptional()
+  nickname?: string
+
+  @Type(() => Number)
+  @IsNumber({}, { message: '非法参数' })
+  @IsOptional()
+  sex?: number
 }

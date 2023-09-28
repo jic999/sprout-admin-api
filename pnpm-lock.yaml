@@ -38,6 +38,9 @@ dependencies:
   express-session:
     specifier: ^1.17.3
     version: registry.npmmirror.com/express-session@1.17.3
+  lodash:
+    specifier: ^4.17.21
+    version: registry.npmmirror.com/lodash@4.17.21
   mysql2:
     specifier: ^3.6.1
     version: registry.npmmirror.com/mysql2@3.6.1

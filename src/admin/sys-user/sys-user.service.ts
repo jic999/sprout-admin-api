@@ -1,8 +1,9 @@
 import { BadRequestException, ConflictException, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { In, Not, Repository } from 'typeorm'
-import { AssignRolesDto, CreateSysUserDto, UpdateSysUserDto } from './sys-user.dto'
+import { AssignRolesDto, CreateSysUserDto, SysUserPageDto, UpdateSysUserDto } from './sys-user.dto'
 import { SysRole, SysUser } from '@/entity'
+import { enhanceQuery } from '@/common/utils'
 
 @Injectable()
 export class SysUserService {
@@ -77,5 +78,13 @@ export class SysUserService {
 
   public async getCount(): Promise<number> {
     return this.sysUser.count()
+  }
+
+  public async page(data: SysUserPageDto) {
+    const page = await enhanceQuery(this.sysUser).page(data, {
+      select: ['id', 'username', 'nickname', 'avatar', 'email', 'status', 'createTime'],
+      relations: ['roles'],
+    })
+    return page
   }
 }
