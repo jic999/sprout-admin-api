@@ -1,0 +1,8 @@
+{
+  "extends": ["@antfu"],
+  "rules": {
+    "@typescript-eslint/consistent-type-imports": "off",
+    "n/prefer-global/process": ["error", "always"],
+    "n/no-path-concat": "off"
+  }
+}
