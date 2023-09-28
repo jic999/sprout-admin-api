@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common'
 import { SysUserService } from './sys-user.service'
 import { AssignRolesDto, CreateSysUserDto, SysUserPageDto, UpdateSysUserDto } from './sys-user.dto'
 import { SysUser } from '@/entity'
@@ -34,8 +34,14 @@ export class SysUserController {
 
   @Get('page')
   @Permission('sys:user:read')
-  public async page(@Body() body: SysUserPageDto) {
-    return this.sysUserService.page(body)
+  public async page(@Query() query: SysUserPageDto) {
+    return this.sysUserService.page(query)
+  }
+
+  @Get('/withRoles/:id')
+  @Permission('sys:user:read')
+  public async fetchWithRoles(@Param() param: UserIdDto): Promise<SysUser> {
+    return this.sysUserService.fetchWithRoles(param.id)
   }
 
   @Get(':id')

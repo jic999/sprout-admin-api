@@ -20,10 +20,10 @@ export class SysRole {
   desc: string
 
   @CreateDateColumn()
-  createdTime: Date
+  createTime: Date
 
   @UpdateDateColumn()
-  updatedTime: Date
+  updateTime: Date
 
   @ManyToMany(() => SysPermission)
   @JoinTable({ name: 'sys_role_permission' })

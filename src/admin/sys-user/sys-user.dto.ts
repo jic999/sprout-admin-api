@@ -30,9 +30,4 @@ export class SysUserPageDto extends PageOptionsDto {
   @IsString({ message: '昵称必须是字符串' })
   @IsOptional()
   nickname?: string
-
-  @Type(() => Number)
-  @IsNumber({}, { message: '非法参数' })
-  @IsOptional()
-  sex?: number
 }

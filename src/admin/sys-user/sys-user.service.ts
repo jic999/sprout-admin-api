@@ -87,4 +87,14 @@ export class SysUserService {
     })
     return page
   }
+
+  public async fetchWithRoles(id: string): Promise<SysUser> {
+    const user = await this.sysUser.findOne({
+      where: { id },
+      relations: ['roles'],
+    })
+    if (!user)
+      throw new BadRequestException('User does not exist')
+    return user
+  }
 }

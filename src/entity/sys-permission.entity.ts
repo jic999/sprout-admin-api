@@ -19,8 +19,8 @@ export class SysPermission {
   desc: string
 
   @CreateDateColumn()
-  createdTime: Date
+  createTime: Date
 
   @UpdateDateColumn()
-  updatedTime: Date
+  updateTime: Date
 }

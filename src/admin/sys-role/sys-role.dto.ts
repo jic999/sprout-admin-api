@@ -17,7 +17,11 @@ export class UpdateSysRoleDto extends ValidatorClassBuilder(
   SysRole,
   ['id'],
   ['name', 'desc'],
-) {}
+) {
+  @IsNumber({}, { each: true })
+  @IsOptional()
+  permIds?: number[]
+}
 export class SysRoleIdDto extends PickType(SysRole, ['id']) {}
 
 export class AssignPermsDto extends ValidatorClassBuilder(

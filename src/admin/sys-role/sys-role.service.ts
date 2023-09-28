@@ -29,6 +29,10 @@ export class SysRoleService {
     const role = await this.sysRole.findOneBy({ id: data.id })
     if (!role)
       throw new ConflictException('Role does not exist')
+    if (data.permIds?.length) {
+      const perms = await this.sysPermission.findBy({ id: In(data.permIds) })
+      role.permissions = perms
+    }
     return this.sysRole.save(Object.assign(role, data))
   }
 
@@ -36,7 +40,7 @@ export class SysRoleService {
     const role = await this.sysRole.findOneBy({ id })
     if (!role)
       throw new ConflictException('Role does not exist')
-    return this.sysRole.softRemove(role)
+    return this.sysRole.remove(role)
   }
 
   public async fetch(id: number): Promise<SysRole> {
@@ -44,7 +48,9 @@ export class SysRoleService {
   }
 
   public async findAll(): Promise<SysRole[]> {
-    return this.sysRole.find()
+    return this.sysRole.find({
+      relations: ['permissions'],
+    })
   }
 
   public async assignPerms(data: AssignPermsDto): Promise<SysRole> {
