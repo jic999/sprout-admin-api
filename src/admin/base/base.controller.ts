@@ -23,7 +23,8 @@ export class AdminBaseController {
     if (!user)
       throw new UnauthorizedException('Invalid username or password')
     req.session.checkCode = null
-    return { user, ...this.authService.jwtSign({ userId: user.id, username: user.username, roles: [] }) }
+    const userInfoVo = await this.userService.fetchSysUserWithPerms(user.username)
+    return { user: userInfoVo, ...this.authService.jwtSign({ userId: user.id, username: user.username, roles: [] }) }
   }
 
   @Get('getUserInfo')
@@ -34,8 +35,8 @@ export class AdminBaseController {
     const payload = this.authService.getPayload(token)
     if (!payload?.username)
       throw new UnauthorizedException('Invalid token')
-    const { salt: _, password: __, ...userInfo } = await this.userService.fetchSysUser(payload.username)
-    return userInfo
+    const userInfoVo = await this.userService.fetchSysUserWithPerms(payload.username)
+    return userInfoVo
   }
 
   @Get('refreshToken')

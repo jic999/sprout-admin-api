@@ -82,6 +82,9 @@ devDependencies:
   '@types/jest':
     specifier: ^29.5.2
     version: registry.npmmirror.com/@types/jest@29.5.2
+  '@types/lodash':
+    specifier: ^4.14.199
+    version: registry.npmmirror.com/@types/lodash@4.14.199
   '@types/node':
     specifier: ^20.3.1
     version: registry.npmmirror.com/@types/node@20.3.1
@@ -1635,6 +1638,12 @@ packages:
     dependencies:
       '@types/node': registry.npmmirror.com/@types/node@20.3.1
     dev: false
+
+  registry.npmmirror.com/@types/lodash@4.14.199:
+    resolution: {integrity: sha512-Vrjz5N5Ia4SEzWWgIVwnHNEnb1UE1XMkvY5DGXrAeOGE9imk0hgTHh5GyDjLDJi9OTCn9oo9dXH1uToK1VRfrg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/lodash/-/lodash-4.14.199.tgz}
+    name: '@types/lodash'
+    version: 4.14.199
+    dev: true
 
   registry.npmmirror.com/@types/mdast@3.0.12:
     resolution: {integrity: sha512-DT+iNIRNX884cx0/Q1ja7NyUPpZuv0KPyL5rGNxm1WC1OtHstl7n4Jb7nk+xacNShQMbczJjt8uFzznpp6kYBg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/mdast/-/mdast-3.0.12.tgz}

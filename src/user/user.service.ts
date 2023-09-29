@@ -1,9 +1,11 @@
+import * as _ from 'lodash'
 import { ConflictException, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { RegisterDto } from 'src/common/dto/user.dto'
 import { SysUser } from 'src/entity/sys-user.entity'
 import { User } from 'src/entity/user.entity'
 import { Repository } from 'typeorm'
+import { UserInfoVo } from '@/common/vo/user.vo'
 
 @Injectable()
 export class UserService {
@@ -44,8 +46,22 @@ export class UserService {
     const user = await this.sysUser.findOne({
       where: { username },
       select: ['id', 'username', 'password', 'salt', 'email', 'nickname', 'avatar', 'status'],
+      relations: ['roles', 'roles.permissions'],
     })
     return user
+  }
+
+  public async fetchSysUserWithPerms(username: string): Promise<UserInfoVo> {
+    const user = await this.sysUser.findOne({
+      where: { username },
+      select: ['id', 'username', 'password', 'salt', 'email', 'nickname', 'avatar', 'status'],
+      relations: ['roles', 'roles.permissions'],
+    })
+    const userInfoVo = new UserInfoVo()
+    Object.keys(userInfoVo).forEach(key => userInfoVo[key] = user[key])
+    userInfoVo.roles = user.roles.map(role => role.name)
+    userInfoVo.perms = _.uniq(user.roles.flatMap(role => role.permissions.map(perm => perm.name)))
+    return userInfoVo
   }
 
   public async fetchSysUserById(id: string): Promise<SysUser> {
