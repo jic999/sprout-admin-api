@@ -54,11 +54,11 @@ export class UserService {
   public async fetchSysUserWithPerms(username: string): Promise<UserInfoVo> {
     const user = await this.sysUser.findOne({
       where: { username },
-      select: ['id', 'username', 'password', 'salt', 'email', 'nickname', 'avatar', 'status'],
+      select: ['id', 'username', 'email', 'nickname', 'avatar', 'status'],
       relations: ['roles', 'roles.permissions'],
     })
     const userInfoVo = new UserInfoVo()
-    Object.keys(userInfoVo).forEach(key => userInfoVo[key] = user[key])
+    Object.assign(userInfoVo, user)
     userInfoVo.roles = user.roles.map(role => role.name)
     userInfoVo.perms = _.uniq(user.roles.flatMap(role => role.permissions.map(perm => perm.name)))
     return userInfoVo
