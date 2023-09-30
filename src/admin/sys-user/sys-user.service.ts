@@ -57,12 +57,12 @@ export class SysUserService {
     return this.sysUser.find()
   }
 
-  public async findPermissionNames(id: string): Promise<string[]> {
+  public async findPermissionCodes(id: string): Promise<string[]> {
     const user = await this.sysUser.findOne({
       where: { id },
       relations: ['roles', 'roles.permissions'],
     })
-    const permissions = user.roles.map(role => role.permissions.map(permission => permission.name))
+    const permissions = user.roles.map(role => role.permissions.map(permission => permission.code))
     return Array.from(new Set(permissions.flat()))
   }
 

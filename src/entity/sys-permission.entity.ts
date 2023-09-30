@@ -9,10 +9,19 @@ export class SysPermission {
   @IsNumber()
   id: number
 
-  @Column({ type: 'varchar', length: 50, unique: true })
+  @Column({ type: 'int', default: 0, comment: '父级id' })
+  @IsNumber()
+  parentId: number
+
+  @Column({ type: 'varchar', length: 50, comment: '角色名称' })
   @IsString()
-  @Length(1, 50)
+  @Length(1, 30)
   name: string
+
+  @Column({ type: 'varchar', length: 50, unique: true, comment: '角色标识' })
+  @IsString()
+  @Length(1, 30)
+  code: string
 
   @Column({ type: 'varchar', length: 255, nullable: true })
   @IsString()

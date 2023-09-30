@@ -32,7 +32,7 @@ export class PermissionGuard implements CanActivate {
     if (!payload?.userId)
       throw new UnauthorizedException('Invalid token')
     // check permission
-    const perms = await this.sysUserService.findPermissionNames(payload.userId)
+    const perms = await this.sysUserService.findPermissionCodes(payload.userId)
     // TODO cache user perms
     const pass = requiredPermissions.every(item => perms.includes(item))
     if (!pass)

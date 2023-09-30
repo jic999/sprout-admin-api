@@ -5,7 +5,7 @@ import { SysRole } from '@/entity/sys-role.entity'
 
 export class CreateSysRoleDto extends ValidatorClassBuilder(
   SysRole,
-  ['name'],
+  ['name', 'code'],
   ['desc'],
 ) {
   @IsNumber({}, { each: true })
@@ -16,7 +16,7 @@ export class CreateSysRoleDto extends ValidatorClassBuilder(
 export class UpdateSysRoleDto extends ValidatorClassBuilder(
   SysRole,
   ['id'],
-  ['name', 'desc'],
+  ['code', 'name', 'desc'],
 ) {
   @IsNumber({}, { each: true })
   @IsOptional()

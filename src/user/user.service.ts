@@ -59,8 +59,8 @@ export class UserService {
     })
     const userInfoVo = new UserInfoVo()
     Object.assign(userInfoVo, user)
-    userInfoVo.roles = user.roles.map(role => role.name)
-    userInfoVo.perms = _.uniq(user.roles.flatMap(role => role.permissions.map(perm => perm.name)))
+    userInfoVo.roles = user.roles.map(role => role.code)
+    userInfoVo.perms = _.uniq(user.roles.flatMap(role => role.permissions.map(perm => perm.code)))
     return userInfoVo
   }
 

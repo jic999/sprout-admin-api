@@ -10,10 +10,15 @@ export class SysRole {
   @IsNumber()
   id: number
 
-  @Column({ type: 'varchar', length: 30, unique: true, comment: '角色标识' })
+  @Column({ type: 'varchar', length: 50, comment: '角色名称' })
   @IsString()
   @Length(1, 30)
   name: string
+
+  @Column({ type: 'varchar', length: 50, unique: true, comment: '角色标识' })
+  @IsString()
+  @Length(1, 30)
+  code: string
 
   @Column({ type: 'varchar', length: 255, nullable: true, comment: '角色描述' })
   @IsString()

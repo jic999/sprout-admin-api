@@ -3,14 +3,14 @@ import { SysPermission } from '@/entity/sys-permission.entity'
 
 export class CreateSysPermissionDto extends ValidatorClassBuilder(
   SysPermission,
-  ['name'],
-  ['desc'],
+  ['name', 'code'],
+  ['parentId', 'desc'],
 ) {}
 
 export class UpdateSysPermissionDto extends ValidatorClassBuilder(
   SysPermission,
   ['id'],
-  ['name', 'desc'],
+  ['parentId', 'name', 'code', 'desc'],
 ) {}
 
 export class SysPermissionIdDto extends ValidatorClassBuilder(
