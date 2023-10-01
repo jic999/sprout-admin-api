@@ -1,6 +1,6 @@
 import { IsNumber, IsString, Length } from 'class-validator'
 import { Type } from 'class-transformer'
-import { AfterLoad, Column, CreateDateColumn, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm'
 import { SysPermission } from './sys-permission.entity'
 import { TimeBase } from './base/time-base.entity'
 

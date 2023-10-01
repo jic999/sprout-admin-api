@@ -1,6 +1,5 @@
 import { PickType } from '@nestjs/mapped-types'
 import { IsNumber, IsOptional, IsString } from 'class-validator'
-import { Type } from 'class-transformer'
 import { ValidatorClassBuilder } from '@common/dto'
 import { SysUser } from '@entity'
 import { PageOptionsDto } from '@/common/dto'
