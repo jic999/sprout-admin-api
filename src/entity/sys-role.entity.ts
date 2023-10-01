@@ -1,10 +1,11 @@
 import { IsNumber, IsString, Length } from 'class-validator'
 import { Type } from 'class-transformer'
-import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import { AfterLoad, Column, CreateDateColumn, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 import { SysPermission } from './sys-permission.entity'
+import { TimeBase } from './base/time-base.entity'
 
 @Entity({ name: 'sys_role' })
-export class SysRole {
+export class SysRole extends TimeBase {
   @PrimaryGeneratedColumn('increment')
   @Type(() => Number)
   @IsNumber()
@@ -23,12 +24,6 @@ export class SysRole {
   @Column({ type: 'varchar', length: 255, nullable: true, comment: '角色描述' })
   @IsString()
   desc: string
-
-  @CreateDateColumn()
-  createTime: Date
-
-  @UpdateDateColumn()
-  updateTime: Date
 
   @ManyToMany(() => SysPermission)
   @JoinTable({ name: 'sys_role_permission' })

@@ -1,8 +1,9 @@
 import { BeforeInsert, Column, DeleteDateColumn, PrimaryGeneratedColumn } from 'typeorm'
 import { IsEmail, IsIn, IsNotEmpty, IsString, Length } from 'class-validator'
 import { CryptoUtil, pwdCrypto } from 'src/common/utils'
+import { TimeBase } from './time-base.entity'
 
-export class BaseUser {
+export class BaseUser extends TimeBase {
   @PrimaryGeneratedColumn('uuid')
   @IsString()
   id: string
@@ -40,9 +41,6 @@ export class BaseUser {
 
   @DeleteDateColumn()
   deleteTime: number
-
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  createTime: Date
 
   @BeforeInsert()
   beforeInsert() {
