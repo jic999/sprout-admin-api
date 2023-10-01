@@ -43,7 +43,7 @@ export class SysRoleService {
     return this.sysRole.remove(role)
   }
 
-  public async fetch(id: number): Promise<SysRole> {
+  public async getById(id: number): Promise<SysRole> {
     return this.sysRole.findOneBy({ id })
   }
 

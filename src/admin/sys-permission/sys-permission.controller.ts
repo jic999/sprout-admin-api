@@ -30,8 +30,8 @@ export class SysPermissionController {
 
   @Get(':id')
   @Permission('sys:perm:read')
-  public fetch(@Param() param: SysPermissionIdDto) {
-    return this.sysPermissionService.fetch(param.id)
+  public getById(@Param() param: SysPermissionIdDto) {
+    return this.sysPermissionService.getById(param.id)
   }
 
   @Get()

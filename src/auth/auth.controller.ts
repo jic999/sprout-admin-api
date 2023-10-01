@@ -31,7 +31,7 @@ export class AuthController {
     const payload = this.authService.getPayload(token)
     if (!payload?.username)
       throw new UnauthorizedException('Invalid token')
-    const { salt: _salt, ...userInfo } = await this.userService.fetch(payload.username)
+    const { salt: _salt, ...userInfo } = await this.userService.getByUsername(payload.username)
     return userInfo
   }
 
@@ -40,7 +40,7 @@ export class AuthController {
     const payload = this.authService.getPayload(token)
     if (!payload?.userId || !this.authService.validateRefreshToken(payload, token))
       throw new UnauthorizedException('Invalid token')
-    const user = await this.userService.fetch(payload.username)
+    const user = await this.userService.getByUsername(payload.username)
     return this.authService.jwtSign({ userId: user.id, username: user.username, roles: [] })
   }
 }

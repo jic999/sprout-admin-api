@@ -15,7 +15,7 @@ export class AuthService {
   ) {}
 
   public async validateUser(username: string, password: string) {
-    const user = await this.user.fetch(username)
+    const user = await this.user.getByUsername(username)
     if (!user || !pwdCrypto.validate(password, user.salt, user.password))
       return null
     const { password: _, salt: __, ...result } = user
@@ -23,7 +23,7 @@ export class AuthService {
   }
 
   public async validateSysUser(username: string, password: string) {
-    const user = await this.user.fetchSysUser(username)
+    const user = await this.user.getSysUserByUsername(username)
     if (!user || !pwdCrypto.validate(password, user.salt, user.password))
       return null
     const { password: _, salt: __, ...result } = user

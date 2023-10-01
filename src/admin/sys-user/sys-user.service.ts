@@ -46,7 +46,7 @@ export class SysUserService {
     return await this.sysUser.softRemove(user)
   }
 
-  public async fetch(id: string): Promise<SysUser> {
+  public async getById(id: string): Promise<SysUser> {
     const user = await this.sysUser.findOneBy({ id })
     if (!user)
       throw new BadRequestException('User does not exist')

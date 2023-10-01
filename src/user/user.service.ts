@@ -16,7 +16,7 @@ export class UserService {
     private sysUser: Repository<SysUser>,
   ) {}
 
-  public async fetch(username: string): Promise<User> {
+  public async getByUsername(username: string): Promise<User> {
     const user = await this.user.findOne({
       where: { username },
       select: ['id', 'username', 'password', 'salt', 'email', 'nickname', 'avatar', 'status'],
@@ -24,7 +24,7 @@ export class UserService {
     return user
   }
 
-  public async fetchById(id: string): Promise<User> {
+  public async getById(id: string): Promise<User> {
     const user = await this.user.findOne({
       where: { id },
       select: ['id', 'username', 'password', 'salt', 'email', 'nickname', 'avatar', 'status'],
@@ -33,7 +33,7 @@ export class UserService {
   }
 
   public async register(data: RegisterDto) {
-    const isExist = await this.fetch(data.username)
+    const isExist = await this.getByUsername(data.username)
     if (isExist)
       throw new ConflictException('Username already exists')
     const user = this.user.create(data)
@@ -42,7 +42,7 @@ export class UserService {
 
   // ------------------- sys user -------------------
 
-  public async fetchSysUser(username: string): Promise<SysUser> {
+  public async getSysUserByUsername(username: string): Promise<SysUser> {
     const user = await this.sysUser.findOne({
       where: { username },
       select: ['id', 'username', 'password', 'salt', 'email', 'nickname', 'avatar', 'status'],
@@ -51,7 +51,7 @@ export class UserService {
     return user
   }
 
-  public async fetchSysUserWithPerms(username: string): Promise<UserInfoVo> {
+  public async getSysUserWithPerms(username: string): Promise<UserInfoVo> {
     const user = await this.sysUser.findOne({
       where: { username },
       select: ['id', 'username', 'email', 'nickname', 'avatar', 'status'],
@@ -64,7 +64,7 @@ export class UserService {
     return userInfoVo
   }
 
-  public async fetchSysUserById(id: string): Promise<SysUser> {
+  public async getSysUserById(id: string): Promise<SysUser> {
     const user = await this.sysUser.findOne({
       where: { id },
       select: ['id', 'username', 'password', 'salt', 'email', 'nickname', 'avatar', 'status'],

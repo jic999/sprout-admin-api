@@ -29,8 +29,8 @@ export class SysRoleController {
 
   @Get(':id')
   @Permission('sys:role:read')
-  public async fetch(@Param() param: SysRoleIdDto) {
-    return await this.sysRoleService.fetch(param.id)
+  public async getById(@Param() param: SysRoleIdDto) {
+    return await this.sysRoleService.getById(param.id)
   }
 
   @Get()

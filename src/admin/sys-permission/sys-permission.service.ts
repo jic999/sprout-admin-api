@@ -26,7 +26,7 @@ export class SysPermissionService {
     return await this.sysPermission.remove(perm)
   }
 
-  public async fetch(id: number): Promise<SysPermission> {
+  public async getById(id: number): Promise<SysPermission> {
     return await this.sysPermission.findOneBy({ id })
   }
 

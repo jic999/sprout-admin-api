@@ -46,8 +46,8 @@ export class SysUserController {
 
   @Get(':id')
   @Permission('sys:user:read')
-  public async fetch(@Param() param: UserIdDto): Promise<SysUser> {
-    return this.sysUserService.fetch(param.id)
+  public async getById(@Param() param: UserIdDto): Promise<SysUser> {
+    return this.sysUserService.getById(param.id)
   }
 
   @Get()
