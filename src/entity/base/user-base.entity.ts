@@ -1,10 +1,11 @@
-import { BeforeInsert, Column, DeleteDateColumn, PrimaryGeneratedColumn } from 'typeorm'
+import { BeforeInsert, Column, DeleteDateColumn, PrimaryColumn } from 'typeorm'
 import { IsEmail, IsIn, IsNotEmpty, IsString, Length } from 'class-validator'
 import { CryptoUtil, pwdCrypto } from 'src/common/utils'
+import { DiscordSnowflake } from '@sapphire/snowflake'
 import { TimeBase } from './time-base.entity'
 
 export class BaseUser extends TimeBase {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryColumn({ type: 'bigint' })
   @IsString()
   id: string
 
@@ -44,6 +45,7 @@ export class BaseUser extends TimeBase {
 
   @BeforeInsert()
   beforeInsert() {
+    this.id = DiscordSnowflake.generate().toString()
     this.salt = CryptoUtil.generateSalt(8)
     this.password = pwdCrypto.encrypt(this.password, this.salt)
   }
