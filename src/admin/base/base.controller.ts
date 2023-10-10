@@ -1,6 +1,6 @@
-import { BadRequestException, Body, Controller, Get, Headers, Post, Query, Req, UnauthorizedException } from '@nestjs/common'
+import { BadRequestException, Body, Controller, Get, Header, Headers, Post, Query, Req, UnauthorizedException } from '@nestjs/common'
 import { AuthService } from 'src/auth'
-import { LoginDto } from 'src/common/dto'
+import { EditSysUserInfoDto, LoginDto } from 'src/common/dto'
 import { UserService } from 'src/user'
 import { Request } from 'express'
 import { Public } from '@/common/decorators'
@@ -23,7 +23,7 @@ export class AdminBaseController {
     if (!user)
       throw new UnauthorizedException('Invalid username or password')
     req.session.checkCode = null
-    const userInfoVo = await this.userService.getSysUserWithPerms(user.username)
+    const userInfoVo = await this.userService.getSysUserWithPerms(user.id)
     return { user: userInfoVo, ...this.authService.jwtSign({ userId: user.id, username: user.username, roles: [] }) }
   }
 
@@ -35,7 +35,7 @@ export class AdminBaseController {
     const payload = this.authService.getPayload(token)
     if (!payload?.username)
       throw new UnauthorizedException('Invalid token')
-    const userInfoVo = await this.userService.getSysUserWithPerms(payload.username)
+    const userInfoVo = await this.userService.getSysUserWithPerms(payload.userId)
     return userInfoVo
   }
 
@@ -51,5 +51,15 @@ export class AdminBaseController {
   @Post('/logout')
   public async logout() {
     return null
+  }
+
+  @Post('editUserInfo')
+  public async editUserInfo(@Body() body: EditSysUserInfoDto, @Headers('Authorization') token: string) {
+    const payload = this.authService.getPayload(token.replace('Bearer ', ''))
+    if (!payload?.userId)
+      throw new UnauthorizedException('Invalid token')
+    if (payload.userId !== body.id)
+      throw new UnauthorizedException('Invalid token')
+    return this.userService.editSysUserInfo(body)
   }
 }

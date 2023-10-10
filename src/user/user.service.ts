@@ -1,7 +1,7 @@
 import * as _ from 'lodash'
 import { ConflictException, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { RegisterDto } from 'src/common/dto/user.dto'
+import { EditSysUserInfoDto, RegisterDto } from 'src/common/dto/user.dto'
 import { SysUser } from 'src/entity/sys-user.entity'
 import { User } from 'src/entity/user.entity'
 import { Repository } from 'typeorm'
@@ -51,9 +51,9 @@ export class UserService {
     return user
   }
 
-  public async getSysUserWithPerms(username: string): Promise<UserInfoVo> {
+  public async getSysUserWithPerms(id: string): Promise<UserInfoVo> {
     const user = await this.sysUser.findOne({
-      where: { username },
+      where: { id },
       select: ['id', 'username', 'email', 'nickname', 'avatar', 'status'],
       relations: ['roles', 'roles.permissions'],
     })
@@ -70,5 +70,10 @@ export class UserService {
       select: ['id', 'username', 'password', 'salt', 'email', 'nickname', 'avatar', 'status'],
     })
     return user
+  }
+
+  public async editSysUserInfo(data: EditSysUserInfoDto) {
+    await this.sysUser.save(data, { reload: false })
+    return this.getSysUserWithPerms(data.id)
   }
 }
