@@ -8,7 +8,6 @@ import { initSystem } from './init'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
-
   app.use(session({
     secret: 'sprout_admin',
     resave: false,
@@ -22,6 +21,6 @@ async function bootstrap() {
   }))
 
   await initSystem(app)
-  await app.listen(2023)
+  await app.listen(process.env.PORT || 3000)
 }
 bootstrap()

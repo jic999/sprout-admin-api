@@ -48,7 +48,7 @@ export class AdminBaseController {
     return this.authService.jwtSign({ userId: user.id, username: user.username })
   }
 
-  @Post('/logout')
+  @Post('logout')
   public async logout() {
     return null
   }
