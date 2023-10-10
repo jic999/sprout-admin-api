@@ -2,7 +2,7 @@ import { join } from 'node:path'
 import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm'
-import { RouterModule } from '@nestjs/core'
+import { APP_GUARD, RouterModule } from '@nestjs/core'
 import { ServeStaticModule } from '@nestjs/serve-static'
 import { AuthModule } from './auth'
 import { configuration } from './config'
@@ -11,6 +11,7 @@ import { routes } from './routes'
 
 import { AdminModule } from './admin/admin.module'
 import { FileModule } from './file/file.module'
+import { EnvGuard } from './common/guards/env.guard'
 
 @Module({
   imports: [
@@ -33,6 +34,12 @@ import { FileModule } from './file/file.module'
     AuthModule,
     AdminModule,
     FileModule,
+  ],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: EnvGuard,
+    },
   ],
 })
 export class AppModule {}
