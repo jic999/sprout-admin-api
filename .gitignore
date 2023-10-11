@@ -1,5 +1,6 @@
 .env
-static
+static/**
+!static/.gitkeep
 
 # compiled output
 /dist
