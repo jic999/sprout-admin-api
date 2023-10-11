@@ -15,6 +15,7 @@ export declare global {
 
       JWT_SECRET: string
       JWT_REFRESH_SECRET: string
+      CORS_ORIGIN: string
     }
   }
 }
