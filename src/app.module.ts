@@ -4,6 +4,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm'
 import { APP_GUARD, RouterModule } from '@nestjs/core'
 import { ServeStaticModule } from '@nestjs/serve-static'
+import { isDemoMode } from '@common/utils'
 import { AuthModule } from './auth'
 import { configuration } from './config'
 import { UserModule } from './user'
@@ -26,10 +27,12 @@ import { EnvGuard } from './common/guards/env.guard'
       }),
       inject: [ConfigService],
     }),
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '../static'),
-      serveRoot: '/static',
-    }),
+    isDemoMode()
+      ? undefined
+      : ServeStaticModule.forRoot({
+        rootPath: join(__dirname, '../static'),
+        serveRoot: '/static',
+      }),
     UserModule,
     AuthModule,
     AdminModule,
