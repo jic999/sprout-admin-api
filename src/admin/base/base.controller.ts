@@ -16,12 +16,12 @@ export class AdminBaseController {
   @Public()
   public async login(@Body() loginDto: LoginDto, @Req() req: Request) {
     if (!req.session.checkCode)
-      throw new BadRequestException('Please refresh check code')
+      throw new BadRequestException('请刷新验证码')
     if (req.session.checkCode.toLocaleUpperCase() !== loginDto.checkCode.toLocaleUpperCase())
-      throw new BadRequestException('Invalid check code')
+      throw new BadRequestException('验证码错误')
     const user = await this.authService.validateSysUser(loginDto.username, loginDto.password)
     if (!user)
-      throw new UnauthorizedException('Invalid username or password')
+      throw new UnauthorizedException('用户名或密码错误')
     req.session.checkCode = null
     const userInfoVo = await this.userService.getSysUserWithPerms(user.id)
     return { user: userInfoVo, ...this.authService.jwtSign({ userId: user.id, username: user.username, roles: [] }) }
