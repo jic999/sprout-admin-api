@@ -12,7 +12,6 @@ import { routes } from './routes'
 import { AdminModule } from './admin/admin.module'
 import { FileModule } from './file/file.module'
 import { EnvGuard } from './common/guards/env.guard'
-import { isDemoMode } from './common/utils'
 
 @Module({
   imports: [
@@ -27,14 +26,10 @@ import { isDemoMode } from './common/utils'
       }),
       inject: [ConfigService],
     }),
-    ...(isDemoMode()
-      ? []
-      : [
-          ServeStaticModule.forRoot({
-            rootPath: join(__dirname, '../static'),
-            serveRoot: '/static',
-          }),
-        ]),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '../static'),
+      serveRoot: '/static',
+    }),
     UserModule,
     AuthModule,
     AdminModule,
