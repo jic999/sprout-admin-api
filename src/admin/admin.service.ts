@@ -50,13 +50,16 @@ export class AdminService {
     const roles: CreateSysRoleDto[] = [
       { name: '超级管理员', code: 'admin', permIds: _perms.map(p => p.id) },
       { name: '普通用户', code: 'user', permIds: _perms.filter(p => p.code.endsWith('read')).map(p => p.id) },
+      { name: '游客', code: 'tourist', permIds: _perms.filter(p => p.code.endsWith('read')).map(p => p.id) },
     ]
     const _roles = await Promise.all(roles.map(r => this.role.create(r)))
 
     const users = await Promise.all([
       this.user.create({ username: 'admin', nickname: '管理员' }),
       this.user.create({ username: 'jic999', nickname: 'jic999' }),
+      this.user.create({ username: 'tourist', nickname: 'tourist' }),
     ])
+    Logger.log(users)
     await Promise.all(users.map((u, i) => this.user.assignRoles({ id: u.id, roleIds: [_roles[i].id] })))
   }
 }

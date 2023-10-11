@@ -33,7 +33,7 @@ export class BaseUser extends TimeBase {
   @IsNotEmpty()
   avatar: string
 
-  @Column({ type: 'tinyint', default: 0, comment: '状态，0正常，1禁用' })
+  @Column({ type: 'int', default: 0, comment: '状态，0正常，1禁用' })
   @IsIn([0, 1])
   status: number
 
