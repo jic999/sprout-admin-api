@@ -27,8 +27,7 @@ import { EnvGuard } from './common/guards/env.guard'
       inject: [ConfigService],
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '../static'),
-      serveRoot: '/static',
+      rootPath: join(__dirname, '../public'),
     }),
     UserModule,
     AuthModule,

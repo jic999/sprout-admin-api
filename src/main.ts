@@ -19,13 +19,13 @@ async function bootstrap() {
     whitelist: true,
     stopAtFirstError: true,
   }))
-  app.enableCors({
-    // 允许跨域的域名
-    origin: process.env.CORS_ORIGIN,
-    credentials: true,
-    allowedHeaders: ['Authorization', 'content-type'],
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  })
+  // app.enableCors({
+  //   // 允许跨域的域名
+  //   origin: process.env.CORS_ORIGIN,
+  //   credentials: true,
+  //   allowedHeaders: ['Authorization', 'content-type'],
+  //   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  // })
 
   await initSystem(app)
   await app.listen(process.env.PORT || 3000)
