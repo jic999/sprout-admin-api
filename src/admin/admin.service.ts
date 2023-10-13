@@ -57,7 +57,7 @@ export class AdminService {
     const users = await Promise.all([
       this.user.create({ username: 'admin', nickname: '管理员' }),
       this.user.create({ username: 'jic999', nickname: 'jic999' }),
-      this.user.create({ username: 'tourist', nickname: 'tourist' }),
+      this.user.create({ username: 'tourist', nickname: '游客' }),
     ])
     Logger.log(users)
     await Promise.all(users.map((u, i) => this.user.assignRoles({ id: u.id, roleIds: [_roles[i].id] })))
