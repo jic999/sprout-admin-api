@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common'
 import { SysUserService } from './sys-user.service'
-import { AssignRolesDto, CreateSysUserDto, SysUserPageDto, UpdateSysUserDto } from './sys-user.dto'
+import { AssignRolesDto, CreateSysUserDto, SysUserPageDto, UpdateSysUserDto, UserIdsDto } from './sys-user.dto'
 import { SysUser } from '@/entity'
 import { Permission } from '@/common/decorators'
 import { UserIdDto } from '@/common/dto'
@@ -60,6 +60,13 @@ export class SysUserController {
   @Permission('sys:user:assignRoles')
   public async assignRoles(@Body() body: AssignRolesDto): Promise<null> {
     await this.sysUserService.assignRoles(body)
+    return null
+  }
+
+  @Post('batchRemove')
+  @Permission('sys:user:delete')
+  public async batchRemove(@Body() body: UserIdsDto): Promise<null> {
+    await this.sysUserService.batchRemove(body.ids)
     return null
   }
 }

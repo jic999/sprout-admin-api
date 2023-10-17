@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common'
 import { SysRoleService } from './sys-role.service'
-import { AssignPermsDto, CreateSysRoleDto, SysRoleIdDto, UpdateSysRoleDto } from './sys-role.dto'
+import { AssignPermsDto, CreateSysRoleDto, SysRoleIdDto, SysRoleIdsDto, UpdateSysRoleDto } from './sys-role.dto'
 import { Permission } from '@/common/decorators'
 
 @Controller('sys-role')
@@ -43,5 +43,11 @@ export class SysRoleController {
   @Permission('sys:role:assignPerms')
   public async assignPerms(@Body() body: AssignPermsDto) {
     return await this.sysRoleService.assignPerms(body)
+  }
+
+  @Post('batchRemove')
+  @Permission('sys:role:delete')
+  public async batchRemove(@Body() body: SysRoleIdsDto) {
+    return await this.sysRoleService.batchRemove(body.ids)
   }
 }

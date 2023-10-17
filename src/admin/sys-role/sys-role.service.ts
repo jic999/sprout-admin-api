@@ -61,4 +61,9 @@ export class SysRoleService {
     role.permissions = perms
     return this.sysRole.save(role)
   }
+
+  public async batchRemove(ids: number[]): Promise<SysRole[]> {
+    const roles = await this.sysRole.findBy({ id: In(ids) })
+    return this.sysRole.remove(roles)
+  }
 }

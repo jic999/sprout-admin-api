@@ -30,3 +30,8 @@ export class SysUserPageDto extends PageOptionsDto {
   @IsOptional()
   nickname?: string
 }
+
+export class UserIdsDto {
+  @IsString({ each: true })
+  ids: string[]
+}

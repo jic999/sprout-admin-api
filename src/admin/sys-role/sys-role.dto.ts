@@ -22,7 +22,13 @@ export class UpdateSysRoleDto extends ValidatorClassBuilder(
   @IsOptional()
   permIds?: number[]
 }
+
 export class SysRoleIdDto extends PickType(SysRole, ['id']) {}
+
+export class SysRoleIdsDto {
+  @IsNumber({}, { each: true })
+  ids: number[]
+}
 
 export class AssignPermsDto extends ValidatorClassBuilder(
   SysRole,

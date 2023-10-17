@@ -97,4 +97,9 @@ export class SysUserService {
       throw new BadRequestException('User does not exist')
     return user
   }
+
+  public async batchRemove(ids: string[]): Promise<SysUser[]> {
+    const users = await this.sysUser.findBy({ id: In(ids) })
+    return await this.sysUser.softRemove(users)
+  }
 }
