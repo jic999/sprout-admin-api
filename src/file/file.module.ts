@@ -5,7 +5,7 @@ import { FileController } from './file.controller'
 @Module({
   imports: [
     MulterModule.register({
-      dest: '/static/dest',
+      dest: '/public/dest',
     }),
   ],
   controllers: [FileController],

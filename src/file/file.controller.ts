@@ -21,7 +21,7 @@ export class FileController {
   ) {
     const hash = await getFileHash(file.path)
     const filename = `${hash}.${file.originalname.split('.').pop()}`
-    const targetDir = 'static/images/avatar'
+    const targetDir = 'public/images/avatar'
     const fullPath = join(targetDir, filename)
     if (existsSync(fullPath)) {
       Logger.log('avatar => File already exists', 'FileController')
