@@ -1,5 +1,5 @@
 import { BeforeInsert, Column, DeleteDateColumn, PrimaryColumn } from 'typeorm'
-import { IsEmail, IsIn, IsNotEmpty, IsString, Length } from 'class-validator'
+import { IsEmail, IsIn, IsNotEmpty, IsNumber, IsString, Length } from 'class-validator'
 import { CryptoUtil, pwdCrypto } from 'src/common/utils'
 import { DiscordSnowflake } from '@sapphire/snowflake'
 import { TimeBase } from './time-base.entity'
@@ -23,6 +23,11 @@ export class BaseUser extends TimeBase {
   @IsString()
   @Length(6, 30)
   password: string
+
+  @Column({ type: 'int', default: 2, comment: '性别，0女，1男，2未知' })
+  @IsNumber()
+  @IsIn([0, 1, 2])
+  gender: number
 
   @Column({ type: 'varchar', length: 50, nullable: true })
   @IsEmail()

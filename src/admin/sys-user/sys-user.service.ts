@@ -82,7 +82,7 @@ export class SysUserService {
 
   public async page(data: SysUserPageDto) {
     const page = await enhanceQuery(this.sysUser).page(data, {
-      select: ['id', 'username', 'nickname', 'avatar', 'email', 'status', 'createTime'],
+      select: ['id', 'username', 'nickname', 'avatar', 'email', 'gender', 'status', 'createTime'],
       relations: ['roles'],
     })
     return page
