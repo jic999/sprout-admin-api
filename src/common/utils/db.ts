@@ -2,6 +2,8 @@ import { PageOptionsDto } from '@common/dto'
 import { FindManyOptions, ILike, Repository } from 'typeorm'
 import * as _ from 'lodash'
 import { PageVo } from '@common/vo'
+import { SysUser } from '@/entity'
+import { User } from '@/entity/user.entity'
 
 export function enhanceQuery<E, P extends PageOptionsDto>(repo: Repository<E>) {
   class EnhanceQuery {
@@ -54,4 +56,11 @@ function buildSearchWhere(query: any) {
     // TODO 更多搜索条件
   }
   return where
+}
+
+export function SelectMapBuilder<
+  Entity extends new () => any,
+  R extends Record<string, Array<keyof InstanceType<Entity>>>,
+>(_: Entity, map: R) {
+  return map
 }

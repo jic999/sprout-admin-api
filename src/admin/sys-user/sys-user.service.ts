@@ -4,6 +4,7 @@ import { In, Not, Repository } from 'typeorm'
 import { AssignRolesDto, CreateSysUserDto, SysUserPageDto, UpdateSysUserDto } from './sys-user.dto'
 import { SysRole, SysUser } from '@/entity'
 import { enhanceQuery } from '@/common/utils'
+import { userSelectMap } from '@/user'
 
 @Injectable()
 export class SysUserService {
@@ -82,7 +83,7 @@ export class SysUserService {
 
   public async page(data: SysUserPageDto) {
     const page = await enhanceQuery(this.sysUser).page(data, {
-      select: ['id', 'username', 'nickname', 'avatar', 'email', 'gender', 'status', 'createTime'],
+      select: userSelectMap.userInfo,
       relations: ['roles'],
     })
     return page

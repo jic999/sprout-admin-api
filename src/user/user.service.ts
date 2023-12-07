@@ -5,6 +5,7 @@ import { EditSysUserInfoDto, RegisterDto } from 'src/common/dto/user.dto'
 import { SysUser } from 'src/entity/sys-user.entity'
 import { User } from 'src/entity/user.entity'
 import { Repository } from 'typeorm'
+import { userSelectMap } from './user.select'
 import { UserInfoVo } from '@/common/vo/user.vo'
 
 @Injectable()
@@ -19,7 +20,7 @@ export class UserService {
   public async getByUsername(username: string): Promise<User> {
     const user = await this.user.findOne({
       where: { username },
-      select: ['id', 'username', 'password', 'salt', 'email', 'nickname', 'avatar', 'status'],
+      select: userSelectMap.userInfoWithPwd,
     })
     return user
   }
@@ -27,7 +28,7 @@ export class UserService {
   public async getById(id: string): Promise<User> {
     const user = await this.user.findOne({
       where: { id },
-      select: ['id', 'username', 'password', 'salt', 'email', 'nickname', 'avatar', 'status'],
+      select: userSelectMap.userInfoWithPwd,
     })
     return user
   }
@@ -45,7 +46,7 @@ export class UserService {
   public async getSysUserByUsername(username: string): Promise<SysUser> {
     const user = await this.sysUser.findOne({
       where: { username },
-      select: ['id', 'username', 'password', 'salt', 'email', 'nickname', 'avatar', 'status'],
+      select: userSelectMap.userInfoWithPwd,
       relations: ['roles', 'roles.permissions'],
     })
     return user
@@ -54,7 +55,7 @@ export class UserService {
   public async getSysUserWithPerms(id: string): Promise<UserInfoVo> {
     const user = await this.sysUser.findOne({
       where: { id },
-      select: ['id', 'username', 'email', 'nickname', 'avatar', 'status'],
+      select: userSelectMap.userInfo,
       relations: ['roles', 'roles.permissions'],
     })
     const userInfoVo = new UserInfoVo()
@@ -67,7 +68,7 @@ export class UserService {
   public async getSysUserById(id: string): Promise<SysUser> {
     const user = await this.sysUser.findOne({
       where: { id },
-      select: ['id', 'username', 'password', 'salt', 'email', 'nickname', 'avatar', 'status'],
+      select: userSelectMap.userInfoWithPwd,
     })
     return user
   }
