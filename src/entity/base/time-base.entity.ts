@@ -9,7 +9,9 @@ export class TimeBase {
 
   @AfterLoad()
   formatTime() {
-    this.createTime = new Date(this.createTime).toLocaleString()
-    this.updateTime = new Date(this.updateTime).toLocaleString()
+    if (this.createTime)
+      this.createTime = new Date(this.createTime).toLocaleString()
+    if (this.updateTime)
+      this.updateTime = new Date(this.updateTime).toLocaleString()
   }
 }
