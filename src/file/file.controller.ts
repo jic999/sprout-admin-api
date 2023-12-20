@@ -1,12 +1,12 @@
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
-import { join } from 'node:path'
 import { Controller, Logger, ParseFilePipeBuilder, Post, UploadedFile, UseInterceptors } from '@nestjs/common'
 import { FileInterceptor } from '@nestjs/platform-express'
-import { getFileHash } from '@common/utils/file'
+import { FileService } from './file.service'
 
 @Controller('file')
 export class FileController {
-  constructor() {}
+  constructor(
+    private fileService: FileService,
+  ) {}
 
   @Post('avatar')
   @UseInterceptors(FileInterceptor('file'))
@@ -19,18 +19,8 @@ export class FileController {
     )
     file: Express.Multer.File,
   ) {
-    const hash = await getFileHash(file.path)
-    const filename = `${hash}.${file.originalname.split('.').pop()}`
-    const targetDir = 'public/images/avatar'
-    const fullPath = join(targetDir, filename)
-    if (existsSync(fullPath)) {
-      Logger.log('avatar => File already exists', 'FileController')
-      return filename
-    }
-    if (!existsSync(targetDir))
-      mkdirSync(targetDir, { recursive: true })
-
-    writeFileSync(`${targetDir}/${filename}`, readFileSync(file.path))
+    const targetDir = 'public/upload'
+    const filename = await this.fileService.save(file, targetDir)
     return filename
   }
 }
