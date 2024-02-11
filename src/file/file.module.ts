@@ -8,9 +8,7 @@ import { FileReference } from '@/entity'
 @Module({
   imports: [
     TypeOrmModule.forFeature([FileReference]),
-    MulterModule.register({
-      dest: '/public/dest',
-    }),
+    MulterModule.register(),
   ],
   controllers: [FileController],
   providers: [FileService],

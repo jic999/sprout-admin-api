@@ -17,7 +17,7 @@ export class FileService {
   }
 
   public async save(file: Express.Multer.File, targetDir: string) {
-    const hash = await getFileHash(file.path)
+    const hash = getFileHash(file.buffer)
     const reference = await this.fileReference.findOneBy({ id: hash })
     const filename = `${hash}.${file.originalname.split('.').pop()}`
 
@@ -29,7 +29,7 @@ export class FileService {
 
     if (!existsSync(targetDir))
       mkdirSync(targetDir, { recursive: true })
-    writeFileSync(`${targetDir}/${filename}`, readFileSync(file.path))
+    writeFileSync(`${targetDir}/${filename}`, file.buffer)
 
     const newReference = this.fileReference.create({ id: hash, count: 1 })
     await this.fileReference.save(newReference)
