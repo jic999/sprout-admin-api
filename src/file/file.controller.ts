@@ -1,4 +1,4 @@
-import { Controller, Logger, ParseFilePipeBuilder, Post, UploadedFile, UseInterceptors } from '@nestjs/common'
+import { Controller, ParseFilePipeBuilder, Post, UploadedFile, UseInterceptors } from '@nestjs/common'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { FileService } from './file.service'
 
